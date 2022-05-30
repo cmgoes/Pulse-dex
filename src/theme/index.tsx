@@ -54,6 +54,9 @@ export function colors(darkMode: boolean): Colors {
     bg4: darkMode ? '#565A69' : '#CED0D9',
     bg5: darkMode ? '#6C7284' : '#888D9B',
 
+    // backgrounds / greys
+    buttonbg1: darkMode ? '#FF7F37' : '#FFAF27',
+
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
@@ -66,7 +69,7 @@ export function colors(darkMode: boolean): Colors {
     primary5: darkMode ? '#153d6f70' : '#EDEEF2', // Buttons
 
     // color text
-    primaryText1: darkMode ? '#6da8ff' : '#000',
+    primaryText1: darkMode ? '#6da8ff' : '#fff',
 
     // secondary colors
     secondary1: darkMode ? '#2172E5' : '#3366FF',

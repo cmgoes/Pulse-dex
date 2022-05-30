@@ -1,33 +1,30 @@
-import { ChainId } from '@uniswap/sdk'
+// import { ChainId } from '@uniswap/sdk'
 import React, { useState } from 'react'
-import { Text } from 'rebass'
+// import { Text } from 'rebass'
 import { NavLink } from 'react-router-dom'
-import { darken } from 'polished'
+// import { darken } from 'polished'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
 import Logo from '../../assets/svg/logo.png'
 import LogoDark from '../../assets/svg/logo_white.png'
-import { useActiveWeb3React } from '../../hooks'
+import Profile from '../../assets/images/profile.png'
+// import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
-import { useETHBalances } from '../../state/wallet/hooks'
+// import { useETHBalances } from '../../state/wallet/hooks'
 
+// import { ExternalLink } from '../../theme'
 
-import { ExternalLink } from '../../theme'
-
-import { YellowCard } from '../Card'
+// import { YellowCard } from '../Card'
 import Settings from '../Settings'
-import Menu from '../Menu'
+// import Menu from '../Menu'
 
 import Row, { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import ClaimModal from '../claim/ClaimModal'
-
-
 import Modal from '../Modal'
 import UniBalanceContent from './UniBalanceContent'
-
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -84,7 +81,7 @@ const HeaderElement = styled.div`
   gap: 8px;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-   flex-direction: row-reverse;
+    flex-direction: row-reverse;
     align-items: center;
   `};
 `
@@ -112,7 +109,8 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
+  /* background-color: ${({ theme, active }) => (!active ? theme.buttonbg1 : theme.buttonbg1)}; */
+  background-color: #FF7F37;
   border-radius: 12px;
   white-space: nowrap;
   width: 100%;
@@ -126,34 +124,30 @@ const AccountElement = styled.div<{ active: boolean }>`
   } */
 `
 
+// const HideSmall = styled.span`
+//   ${({ theme }) => theme.mediaWidth.upToSmall`
+//     display: none;
+//   `};
+// `
 
+// const NetworkCard = styled(YellowCard)`
+//   border-radius: 12px;
+//   padding: 8px 12px;
+//   ${({ theme }) => theme.mediaWidth.upToSmall`
+//     margin: 0;
+//     margin-right: 0.5rem;
+//     width: initial;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     flex-shrink: 1;
+//   `};
+// `
 
-
-
-const HideSmall = styled.span`
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
-`
-
-const NetworkCard = styled(YellowCard)`
-  border-radius: 12px;
-  padding: 8px 12px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin: 0;
-    margin-right: 0.5rem;
-    width: initial;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 1;
-  `};
-`
-
-const BalanceText = styled(Text)`
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
-`
+// const BalanceText = styled(Text)`
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//     display: none;
+//   `};
+// `
 
 const Title = styled.a`
   display: flex;
@@ -171,9 +165,26 @@ const Title = styled.a`
 
 const UniIcon = styled.div`
   transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
+`
+
+const PriceBox = styled.div`
+  border: 1px solid #595959;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 6px;
+`
+
+const PriceIcon = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const PriceText = styled.span`
+  font-size: 12px;
+  padding-left: 6px;
+  color: white;
 `
 
 const activeClassName = 'ACTIVE'
@@ -183,83 +194,76 @@ const StyledNavLink = styled(NavLink).attrs({
 })`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
-  border-radius: 3rem;
+  /* border-radius: 3rem; */
   outline: none;
   cursor: pointer;
   text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 1rem;
+  color: #ddd;
+  font-size: 0.9rem;
   width: fit-content;
   margin: 0 12px;
   font-weight: 500;
 
-  &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text1};
-  }
-
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
+    color: #bbb;
+  }
+
+  &.${activeClassName} {
+    /* border-radius: 12px; */
+    font-weight: 600;
+    color: #fff;
+    border-bottom: 1px solid white;
   }
 `
 
-const StyledExternalLink = styled(ExternalLink).attrs({
-  activeClassName
-})<{ isActive?: boolean }>`
-  ${({ theme }) => theme.flexRowNoWrap}
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 1rem;
-  width: fit-content;
-  margin: 0 12px;
-  font-weight: 500;
+// const StyledExternalLink = styled(ExternalLink).attrs({
+//   activeClassName
+// })<{ isActive?: boolean }>`
+//   ${({ theme }) => theme.flexRowNoWrap}
+//   align-items: left;
+//   border-radius: 3rem;
+//   outline: none;
+//   cursor: pointer;
+//   text-decoration: none;
+//   color: ${({ theme }) => theme.text2};
+//   font-size: 1rem;
+//   width: fit-content;
+//   margin: 0 12px;
+//   font-weight: 500;
 
-  &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text1};
-  }
+//   &.${activeClassName} {
+//     border-radius: 12px;
+//     font-weight: 600;
+//     color: ${({ theme }) => theme.text1};
+//   }
 
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
-  }
+//   :hover,
+//   :focus {
+//     color: ${({ theme }) => darken(0.1, theme.text1)};
+//   }
 
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      display: none;
-`}
-`
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//       display: none;
+// `}
+// `
 
-const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
-  [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.ROPSTEN]: 'Ropsten',
-  [ChainId.GÖRLI]: 'Görli',
-  [ChainId.KOVAN]: 'Kovan',
-  [ChainId.NOVA]: 'Nova Network'
-}
+// const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
+//   [ChainId.RINKEBY]: 'Rinkeby',
+//   [ChainId.ROPSTEN]: 'Ropsten',
+//   [ChainId.GÖRLI]: 'Görli',
+//   [ChainId.KOVAN]: 'Kovan',
+//   [ChainId.NOVA]: 'Nova Network'
+// }
 
 export default function Header() {
-  const { account, chainId } = useActiveWeb3React()
+  // const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
 
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  // const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
 
-
-
-
-
   const [showUniBalanceModal, setShowUniBalanceModal] = useState(false)
-
-
-
-
 
   return (
     <HeaderFrame>
@@ -270,11 +274,24 @@ export default function Header() {
       <HeaderRow>
         <Title href=".">
           <UniIcon>
-            <img width={'32px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img width={'120px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </UniIcon>
         </Title>
         <HeaderLinks>
           <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+            {t('Home')}
+          </StyledNavLink>
+          <StyledNavLink id={`swap-nav-link`} to={'/staking'}>
+            {t('Staking')}
+          </StyledNavLink>
+          <StyledNavLink id={`swap-nav-link`} to={'/nft'}>
+            {t('NFT')}
+          </StyledNavLink>
+          <StyledNavLink id={`swap-nav-link`} to={'/memebank'}>
+            {t('Meme Bank')}
+          </StyledNavLink>
+
+          {/* <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
             {t('Swap')}
           </StyledNavLink>
           <StyledNavLink
@@ -291,32 +308,42 @@ export default function Header() {
             {t('Liquidity')}
           </StyledNavLink>
           <StyledNavLink id={`create-nav-link`} to={'/create/ETH'}>
-          {t('Create Pair')}
-        </StyledNavLink>
+            {t('Create Pair')}
+          </StyledNavLink>
           <StyledExternalLink id={`stake-nav-link`} href={'https://novanetwork.io/'}>
-          </StyledExternalLink>
+          </StyledExternalLink> */}
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
-          <HideSmall style={{ minWidth: "115px", textAlign: "center", fontSize: "10pt" }}>
+          {/* <HideSmall style={{ minWidth: '115px', textAlign: 'center', fontSize: '10px' }}>
             {chainId && NETWORK_LABELS[chainId] && (
               <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
             )}
-          </HideSmall>
+          </HideSmall> */}
+          <PriceBox>
+            <PriceIcon>
+              <img width={'24px'} src={Profile} alt="profile" />
+            </PriceIcon>
+            <PriceText>$0.009</PriceText>
+          </PriceBox>
 
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-            {account && userEthBalance ? (
+          {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
+          {/* {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
                 {userEthBalance?.toSignificant(4)} SNT
               </BalanceText>
-            ) : null}
+            ) : null} */}
+          <AccountElement active={!true}>
+            {/* <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
+              SNT
+            </BalanceText> */}
             <Web3Status />
           </AccountElement>
         </HeaderElement>
         <HeaderElementWrap>
           <Settings />
-          <Menu />
+          {/* <Menu /> */}
         </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>

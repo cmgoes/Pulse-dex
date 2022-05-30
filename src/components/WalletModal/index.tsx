@@ -298,7 +298,7 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the Nova Network mainnet to continue.</h5>
+              <h5>Please connect to the PulseChain Network mainnet to continue.</h5>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
@@ -351,8 +351,8 @@ export default function WalletModal({
           )}
           {walletView !== WALLET_VIEWS.PENDING && (
             <Blurb>
-              <span>New to Nova Network? &nbsp;</span>{' '}
-              <ExternalLink href="https://docs.novanetwork.io/getting-started/compatible-wallets">Explore compatible wallets.</ExternalLink>
+              <span>New to Pulsechain Network? &nbsp;</span>{' '}
+              <ExternalLink href="">Explore compatible wallets.</ExternalLink>
             </Blurb>
           )}
         </ContentWrapper>

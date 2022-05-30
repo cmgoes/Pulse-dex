@@ -28,6 +28,7 @@ import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
 import Swap from './Swap'
 import { OpenClaimAddressModalAndRedirectToSwap, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import BackgroundLand from '../assets/images/bodybackground.jpg'
 
 import Vote from './Vote'
 import VotePage from './Vote/VotePage'
@@ -37,6 +38,21 @@ const AppWrapper = styled.div`
   flex-flow: column;
   align-items: flex-start;
   overflow-x: hidden;
+  background-image: url(${BackgroundLand});
+  background-size: cover;
+  /* background-color: #111; */
+  @media (min-width: 1200px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  @media (min-width: 1400px) {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  @media (min-width: 1600px) {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
 `
 
 const HeaderWrapper = styled.div`
@@ -78,7 +94,7 @@ export default function App() {
   return (
     <Suspense fallback={null}>
       <Route component={GoogleAnalyticsReporter} />
-      <Route component={DarkModeQueryParamReader} />
+      <Route component={DarkModeQueryParamReader} />      
       <AppWrapper>
         <URLWarning />
         <HeaderWrapper>
@@ -117,7 +133,7 @@ export default function App() {
           </Web3ReactManager>
           <Marginer />
         </BodyWrapper>
-      </AppWrapper>
+      </AppWrapper>      
     </Suspense>
   )
 }
